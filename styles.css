@@ -288,6 +288,7 @@ h3 {
 
 .quote-entry blockquote {
   margin: 0;
+  width: 100%;
 }
 
 .quote-entry p {
@@ -297,6 +298,7 @@ h3 {
 .quote-entry cite {
   display: block;
   margin-top: 6px;
+  width: 100%;
   color: var(--muted);
   font-size: 0.95rem;
   font-style: normal;
