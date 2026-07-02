@@ -274,7 +274,7 @@ h3 {
 
 .quote-list {
   display: grid;
-  gap: 18px;
+  gap: 8px;
 }
 
 .quote-entry {
@@ -282,13 +282,8 @@ h3 {
   grid-template-columns: minmax(0, 1fr) max-content;
   column-gap: 24px;
   align-items: baseline;
-  padding: 18px 0;
+  padding: 6px 0;
   width: 100%;
-  border-top: 1px solid var(--border);
-}
-
-.quote-entry:last-child {
-  border-bottom: 1px solid var(--border);
 }
 
 .quote-entry blockquote {
