@@ -289,8 +289,7 @@ h3 {
   gap: 10px;
 }
 
-.project-media img,
-.project-media video {
+.project-media img {
   display: block;
   width: 100%;
   aspect-ratio: 4 / 3;
