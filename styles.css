@@ -374,7 +374,7 @@ h3 {
 .section-intro {
   max-width: none;
   margin-bottom: 18px;
-  color: var(--muted);
+  color: var(--text);
   font-size: 1.12rem;
   white-space: nowrap;
 }
@@ -398,7 +398,7 @@ h3 {
   margin: 0;
   min-width: 0;
   text-align: center;
-  color: #2f3744;
+  color: var(--text);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.12rem;
   font-style: italic;
