@@ -234,12 +234,14 @@ h3 {
 
 .venue-dark {
   color: var(--text);
+  font-weight: 400;
 }
 
 .publication-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 7px;
+  align-items: baseline;
 }
 
 .publication-links a {
@@ -247,6 +249,10 @@ h3 {
   font-size: 0.95rem;
   font-weight: 750;
   text-decoration: none;
+}
+
+.publication-links span {
+  color: var(--muted);
 }
 
 .publication-links a:hover,
