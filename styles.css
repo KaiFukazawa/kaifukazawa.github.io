@@ -329,7 +329,7 @@ h3 {
 .experience-heading {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   align-items: baseline;
 }
 
@@ -342,10 +342,16 @@ h3 {
 }
 
 .experience-heading h3,
-.experience-heading p,
-.experience-heading span {
+.experience-heading p {
   margin-bottom: 0;
   font-size: 1.24rem;
+}
+
+.experience-heading span {
+  margin: 0 -2px;
+  color: var(--muted);
+  font-size: 1.48rem;
+  line-height: 1;
 }
 
 .experience-heading a {
