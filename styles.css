@@ -157,19 +157,14 @@ h3 {
 
 .news-list {
   display: grid;
-  gap: 12px;
+  gap: 8px;
   margin: 0;
-  padding: 0;
-  list-style: none;
+  padding-left: 1.2rem;
+  list-style: disc;
 }
 
 .news-list li {
-  display: grid;
-  grid-template-columns: 128px minmax(0, 1fr);
-  gap: 16px;
-  align-items: baseline;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
+  padding-left: 4px;
 }
 
 .news-list time,
@@ -181,6 +176,8 @@ h3 {
 }
 
 .news-list time {
+  display: inline-block;
+  margin-right: 10px;
   font-weight: 650;
 }
 
