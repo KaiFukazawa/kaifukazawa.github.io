@@ -316,6 +316,18 @@ h3 {
   border-top: 0;
 }
 
+.experience-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.experience-heading h3,
+.experience-heading p {
+  margin-bottom: 0;
+}
+
 .experience-body a {
   color: var(--accent);
   font-size: 1.08rem;
