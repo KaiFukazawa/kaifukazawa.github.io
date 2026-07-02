@@ -394,6 +394,13 @@ h3 {
   padding-left: 1.1rem;
 }
 
+.education-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+}
+
 .education-item h3 {
   margin-bottom: 2px;
   font-size: 1.24rem;
@@ -402,6 +409,13 @@ h3 {
 .education-item p {
   color: var(--text);
   font-size: 1.12rem;
+}
+
+.education-item img {
+  display: block;
+  width: 72px;
+  height: auto;
+  object-fit: contain;
 }
 
 .section-intro {
