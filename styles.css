@@ -212,13 +212,13 @@ h3 {
 
 .publication h3 {
   max-width: 760px;
-  font-size: 1.16rem;
+  font-size: 1.28rem;
 }
 
 .authors {
   margin-bottom: 4px;
   color: var(--text);
-  font-size: 1rem;
+  font-size: 1.08rem;
 }
 
 .venue {
@@ -230,6 +230,10 @@ h3 {
 .venue-strong {
   color: var(--text);
   font-weight: 760;
+}
+
+.venue-dark {
+  color: var(--text);
 }
 
 .publication-links {
