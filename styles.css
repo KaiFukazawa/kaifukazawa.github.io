@@ -278,7 +278,9 @@ h3 {
 }
 
 .quote-entry {
+  display: block;
   padding: 18px 0;
+  width: 100%;
   border-top: 1px solid var(--border);
 }
 
@@ -305,6 +307,14 @@ h3 {
   font-weight: 650;
   text-align: right;
   white-space: nowrap;
+}
+
+.quote-dot {
+  display: inline-block;
+  margin: 0 0.18em;
+  font-size: 0.78em;
+  line-height: 1;
+  vertical-align: 0.06em;
 }
 
 @media (max-width: 760px) {
