@@ -272,6 +272,35 @@ h3 {
   white-space: nowrap;
 }
 
+.quote-list {
+  display: grid;
+  gap: 18px;
+}
+
+.quote-entry {
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+}
+
+.quote-entry:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.quote-entry blockquote {
+  margin: 0 0 8px;
+}
+
+.quote-entry p {
+  margin: 0;
+}
+
+.quote-entry cite {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-style: normal;
+  font-weight: 650;
+}
+
 @media (max-width: 760px) {
   .site-shell {
     width: min(100% - 28px, 1040px);
