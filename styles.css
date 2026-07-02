@@ -245,7 +245,7 @@ h3 {
 }
 
 .publication-links a {
-  color: var(--accent-strong);
+  color: var(--accent);
   font-size: 0.95rem;
   font-weight: 750;
   text-decoration: none;
