@@ -269,6 +269,12 @@ h3 {
   white-space: nowrap;
 }
 
+.section-intro {
+  max-width: 720px;
+  margin-bottom: 18px;
+  color: var(--muted);
+}
+
 .quote-list {
   display: grid;
   gap: 8px;
