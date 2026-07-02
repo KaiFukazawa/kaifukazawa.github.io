@@ -278,10 +278,10 @@ h3 {
 }
 
 .quote-entry {
-  display: flex;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  column-gap: 24px;
   align-items: baseline;
-  justify-content: space-between;
   padding: 18px 0;
   width: 100%;
   border-top: 1px solid var(--border);
@@ -304,7 +304,6 @@ h3 {
 }
 
 .quote-entry cite {
-  flex: 0 0 auto;
   color: var(--muted);
   font-size: 0.95rem;
   font-style: italic;
@@ -360,15 +359,6 @@ h3 {
   .experience-meta {
     align-items: flex-start;
     white-space: normal;
-  }
-
-  .quote-entry {
-    display: block;
-  }
-
-  .quote-entry cite {
-    display: block;
-    margin-top: 6px;
   }
 }
 
