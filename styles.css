@@ -329,6 +329,14 @@ h3 {
   align-items: baseline;
 }
 
+.experience-date {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
 .experience-heading h3,
 .experience-heading p {
   margin-bottom: 0;
@@ -356,15 +364,9 @@ h3 {
   white-space: nowrap;
 }
 
-.experience-logo-wrap time {
-  color: var(--muted);
-  font-size: 0.95rem;
-  font-weight: 650;
-}
-
 .experience-logo-wrap img {
   display: block;
-  width: 150px;
+  width: 100px;
   height: auto;
   object-fit: contain;
 }
