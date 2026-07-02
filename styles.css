@@ -372,10 +372,11 @@ h3 {
 }
 
 .section-intro {
-  max-width: 720px;
+  max-width: none;
   margin-bottom: 18px;
   color: var(--muted);
   font-size: 1.12rem;
+  white-space: nowrap;
 }
 
 .quote-list {
