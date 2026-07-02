@@ -421,6 +421,7 @@ h3 {
 
 .education-logo-kogakuin {
   width: 86px;
+  transform: translateY(20px);
 }
 
 .section-intro {
