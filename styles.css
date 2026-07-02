@@ -338,6 +338,7 @@ h3 {
 .experience-body a:hover,
 .experience-body a:focus-visible {
   color: var(--accent);
+  text-decoration: none;
 }
 
 .experience-logo-wrap {
