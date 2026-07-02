@@ -152,9 +152,25 @@
 
       <section class="section" aria-labelledby="projects-title">
         <h2 id="projects-title">Current Projects</h2>
-        <article class="simple-entry">
-          <h3>Density-Informed Margin Imitation Learning</h3>
-          <p class="muted">Description coming soon.</p>
+        <article class="project-entry">
+          <div class="project-media" aria-label="Imitation learning project demos">
+            <img src="assets/IL_demo.gif" alt="Imitation learning policy demo">
+            <img src="assets/demo_trace.gif" alt="Imitation learning trajectory trace">
+          </div>
+          <div class="project-body">
+            <h3>Mitigating Compounding Errors in Imitation Learning</h3>
+            <p>
+              I am developing an approach to reduce compounding errors in imitation learning. Our
+              approach leverages additional information from offline demonstrations to improve
+              policy performance without substantially complicating the learning pipeline.
+              Preliminary experiments show consistent improvements of <strong>10–15%</strong> over
+              standard imitation learning baselines, including diffusion policies. The same
+              information also provides additional signals for evaluating policy behavior beyond
+              task success, including indicators of distribution shift. We are currently working
+              toward real-world bimanual manipulation with ALOHA and building an end-to-end
+              pipeline for teleoperation, data collection, policy training, and evaluation.
+            </p>
+          </div>
         </article>
       </section>
 

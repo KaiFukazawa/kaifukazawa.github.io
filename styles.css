@@ -287,6 +287,34 @@ h3 {
   background: #dbeafe;
 }
 
+.project-entry {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+  padding: 10px 0;
+}
+
+.project-media {
+  display: grid;
+  gap: 10px;
+}
+
+.project-media img {
+  display: block;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.project-body h3 {
+  font-size: 1.28rem;
+}
+
+.project-body p {
+  margin-bottom: 0;
+  font-size: 1.04rem;
+}
+
 .simple-entry,
 .experience-entry {
   padding: 18px 0;
@@ -386,12 +414,17 @@ h3 {
   }
 
   .news-list li,
-  .publication {
+  .publication,
+  .project-entry {
     grid-template-columns: 1fr;
   }
 
   .publication-thumbnail {
     width: min(100%, 240px);
+  }
+
+  .project-media {
+    width: min(100%, 280px);
   }
 
   .experience-entry {
