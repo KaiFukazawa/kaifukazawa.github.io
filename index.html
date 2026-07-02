@@ -154,8 +154,8 @@
         <h2 id="projects-title">Current Projects</h2>
         <article class="project-entry">
           <div class="project-media" aria-label="Imitation learning project demos">
-            <img src="assets/paired_0051_success_failure_fps8.gif" alt="Paired imitation learning success and failure demo">
-            <img src="assets/paired_0051_synced_success_failure_xi_logp_fps8_drawpath.gif" alt="Paired imitation learning trajectory and density trace">
+            <img class="sync-gif" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-src="assets/paired_0051_success_failure_fps8.gif" alt="Paired imitation learning success and failure demo">
+            <img class="sync-gif" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-src="assets/paired_0051_synced_success_failure_xi_logp_fps8_drawpath.gif" alt="Paired imitation learning trajectory and density trace">
           </div>
           <div class="project-body">
             <h3>Mitigating Compounding Errors in Imitation Learning</h3>
@@ -222,5 +222,26 @@
         </div>
       </section>
     </main>
+    <script>
+      const syncGifs = Array.from(document.querySelectorAll('.sync-gif'));
+
+      if (syncGifs.length) {
+        Promise.all(syncGifs.map((gif) => (
+          fetch(gif.dataset.src)
+            .then((response) => response.blob())
+            .then((blob) => URL.createObjectURL(blob))
+        ))).then((urls) => {
+          requestAnimationFrame(() => {
+            syncGifs.forEach((gif, index) => {
+              gif.src = urls[index];
+            });
+          });
+        }).catch(() => {
+          syncGifs.forEach((gif) => {
+            gif.src = gif.dataset.src;
+          });
+        });
+      }
+    </script>
   </body>
 </html>
