@@ -189,14 +189,14 @@ h3 {
 
 .publication {
   display: grid;
-  grid-template-columns: 150px minmax(0, 1fr);
-  gap: 22px;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 28px;
   align-items: center;
-  padding: 12px 0;
+  padding: 16px 0;
 }
 
 .publication-thumbnail {
-  width: 150px;
+  width: 220px;
   aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 6px;
@@ -212,12 +212,24 @@ h3 {
 
 .publication h3 {
   max-width: 760px;
+  font-size: 1.16rem;
+}
+
+.authors {
+  margin-bottom: 4px;
+  color: var(--text);
+  font-size: 1rem;
 }
 
 .venue {
   margin-bottom: 12px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 650;
+}
+
+.venue-strong {
+  color: var(--text);
+  font-weight: 760;
 }
 
 .publication-links {
@@ -353,7 +365,7 @@ h3 {
   }
 
   .publication-thumbnail {
-    width: min(100%, 180px);
+    width: min(100%, 240px);
   }
 
   .experience-entry {
