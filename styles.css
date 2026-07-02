@@ -40,6 +40,10 @@ a:focus-visible {
   color: var(--accent-strong);
 }
 
+.plain-link {
+  text-decoration: none;
+}
+
 .site-shell {
   width: min(100% - 40px, 1040px);
   margin: 0 auto;
