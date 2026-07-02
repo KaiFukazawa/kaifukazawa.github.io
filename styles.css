@@ -297,6 +297,11 @@ h3 {
   object-fit: contain;
 }
 
+.project-media .project-sync-gif {
+  aspect-ratio: auto;
+  height: auto;
+}
+
 .project-body p {
   margin-bottom: 0;
   font-size: 1.12rem;
