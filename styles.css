@@ -85,17 +85,21 @@ h3 {
 .profile-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
-  margin: 0 0 30px;
+  gap: 24px;
+  margin: 0 0 34px;
 }
 
 .icon-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   color: #1f2937;
+  line-height: 0;
   text-decoration: none;
 }
 
@@ -105,8 +109,9 @@ h3 {
 }
 
 .icon-link svg {
-  width: 30px;
-  height: 30px;
+  display: block;
+  width: 46px;
+  height: 46px;
   fill: currentColor;
   flex: 0 0 auto;
 }
@@ -310,7 +315,6 @@ h3 {
   }
 
   .icon-link {
-    width: 34px;
-    height: 34px;
+    padding: 0;
   }
 }
