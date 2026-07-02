@@ -213,7 +213,8 @@ h3 {
   object-fit: contain;
 }
 
-.publication h3 {
+.publication h3,
+.project-body h3 {
   max-width: 760px;
   font-size: 1.28rem;
 }
@@ -285,10 +286,6 @@ h3 {
   aspect-ratio: 4 / 3;
   border-radius: 6px;
   object-fit: contain;
-}
-
-.project-body h3 {
-  font-size: 1.28rem;
 }
 
 .project-body p {
