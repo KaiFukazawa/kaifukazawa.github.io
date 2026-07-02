@@ -356,8 +356,8 @@ h3 {
 
 .experience-logo-wrap img {
   display: block;
-  width: 96px;
-  height: 96px;
+  width: 220px;
+  height: auto;
   object-fit: contain;
 }
 
