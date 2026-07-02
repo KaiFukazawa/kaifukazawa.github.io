@@ -411,11 +411,16 @@ h3 {
   font-size: 1.04rem;
 }
 
-.education-item img {
+.education-logo {
   display: block;
   width: 72px;
   height: auto;
   object-fit: contain;
+  transform: translateY(8px);
+}
+
+.education-logo-kogakuin {
+  width: 86px;
 }
 
 .section-intro {
