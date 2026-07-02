@@ -294,6 +294,9 @@ h3 {
 .quote-entry blockquote {
   margin: 0;
   min-width: 0;
+  color: #2f3744;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
 }
 
 .quote-entry p {
@@ -304,7 +307,7 @@ h3 {
   flex: 0 0 auto;
   color: var(--muted);
   font-size: 0.95rem;
-  font-style: normal;
+  font-style: italic;
   font-weight: 650;
   text-align: right;
   white-space: nowrap;
