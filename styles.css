@@ -85,7 +85,8 @@ h2 {
 }
 
 .experience-section {
-  margin-top: 48px;
+  margin-top: 18px;
+  padding-top: 18px;
   border-top: 1px solid var(--border);
 }
 
