@@ -304,7 +304,7 @@ h3 {
 
 .simple-entry,
 .experience-entry {
-  padding: 18px 0;
+  padding: 14px 0 10px;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -324,7 +324,7 @@ h3 {
 .experience-heading {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   align-items: baseline;
 }
 
@@ -337,14 +337,15 @@ h3 {
 }
 
 .experience-heading h3,
-.experience-heading p {
+.experience-heading p,
+.experience-heading span {
   margin-bottom: 0;
   font-size: 1.24rem;
 }
 
-.experience-body a {
+.experience-heading a {
   color: var(--accent);
-  font-size: 1.08rem;
+  font-size: 1.24rem;
   font-weight: 400;
   text-decoration: none;
 }
@@ -353,8 +354,8 @@ h3 {
   padding-left: 1.1rem;
 }
 
-.experience-body a:hover,
-.experience-body a:focus-visible {
+.experience-heading a:hover,
+.experience-heading a:focus-visible {
   color: var(--accent);
   text-decoration: none;
 }
@@ -369,7 +370,7 @@ h3 {
 
 .experience-logo-wrap img {
   display: block;
-  width: 100px;
+  width: 72px;
   height: auto;
   object-fit: contain;
 }
