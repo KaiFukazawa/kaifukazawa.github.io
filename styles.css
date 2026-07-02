@@ -254,6 +254,8 @@ h3 {
 .publication-links span {
   margin: 0 1px;
   color: var(--muted);
+  font-size: 1.12rem;
+  line-height: 1;
 }
 
 .publication-links a:hover,
