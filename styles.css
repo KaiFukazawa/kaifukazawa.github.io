@@ -375,6 +375,7 @@ h3 {
   max-width: 720px;
   margin-bottom: 18px;
   color: var(--muted);
+  font-size: 1.12rem;
 }
 
 .quote-list {
@@ -396,6 +397,7 @@ h3 {
   min-width: 0;
   color: #2f3744;
   font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.12rem;
   font-style: italic;
 }
 
@@ -406,7 +408,7 @@ h3 {
 
 .quote-entry cite {
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 1.12rem;
   font-style: italic;
   font-weight: 650;
   text-align: right;
