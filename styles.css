@@ -303,7 +303,9 @@ h3 {
 .project-media img {
   display: block;
   width: 100%;
+  aspect-ratio: 4 / 3;
   border-radius: 6px;
+  object-fit: contain;
 }
 
 .project-body h3 {
