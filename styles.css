@@ -240,7 +240,7 @@ h3 {
 .publication-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 3px;
   align-items: baseline;
 }
 
@@ -252,6 +252,7 @@ h3 {
 }
 
 .publication-links span {
+  margin: 0 1px;
   color: var(--muted);
 }
 
