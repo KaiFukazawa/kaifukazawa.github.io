@@ -287,7 +287,13 @@ h3 {
 }
 
 .quote-entry blockquote {
-  margin: 0 0 8px;
+  margin: 0;
+}
+
+.quote-entry blockquote::after {
+  display: block;
+  clear: both;
+  content: "";
 }
 
 .quote-entry p {
@@ -295,10 +301,13 @@ h3 {
 }
 
 .quote-entry cite {
+  float: right;
+  margin-left: 28px;
   color: var(--muted);
   font-size: 0.95rem;
   font-style: normal;
   font-weight: 650;
+  white-space: nowrap;
 }
 
 @media (max-width: 760px) {
