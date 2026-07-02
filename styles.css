@@ -54,7 +54,7 @@ a:focus-visible {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 280px;
   gap: 56px;
-  align-items: start;
+  align-items: center;
   padding-bottom: 56px;
   border-bottom: 1px solid var(--border);
 }
@@ -280,6 +280,7 @@ h3 {
   .hero {
     grid-template-columns: 1fr;
     gap: 30px;
+    align-items: start;
     padding-bottom: 42px;
   }
 
