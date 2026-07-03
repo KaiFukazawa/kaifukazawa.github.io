@@ -432,6 +432,11 @@ h3 {
   white-space: nowrap;
 }
 
+.quotes-entry {
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
 .quote-list {
   display: grid;
   gap: 8px;
