@@ -501,8 +501,8 @@ h3 {
   }
 
   .portrait img {
-    width: min(100%, 280px);
-    height: 390px;
+    width: min(100%, 300px);
+    height: 418px;
   }
 
   .news-list li,
@@ -512,7 +512,7 @@ h3 {
   }
 
   .publication-thumbnail {
-    width: min(100%, 240px);
+    width: min(100%, 280px);
     justify-self: center;
   }
 
