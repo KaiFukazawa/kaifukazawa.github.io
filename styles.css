@@ -521,12 +521,13 @@ h3 {
   }
 
   .experience-entry {
-    display: grid;
+    display: flex;
     gap: 14px;
+    align-items: flex-start;
   }
 
   .experience-logo-wrap {
-    align-items: flex-start;
+    align-items: flex-end;
     white-space: normal;
   }
 }
