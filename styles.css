@@ -421,7 +421,7 @@ h3 {
 
 .education-logo-kogakuin {
   width: 86px;
-  transform: translateY(20px);
+  transform: translateY(26px);
 }
 
 .section-intro {
@@ -534,6 +534,14 @@ h3 {
   .experience-logo-wrap {
     align-items: flex-end;
     white-space: normal;
+  }
+
+  .education-logo-ucdavis {
+    transform: translateY(20px);
+  }
+
+  .education-logo-kogakuin {
+    transform: translateY(20px);
   }
 }
 
