@@ -492,7 +492,7 @@ h3 {
   }
 
   .portrait {
-    justify-self: start;
+    justify-self: center;
   }
 
   .portrait img {
@@ -508,10 +508,16 @@ h3 {
 
   .publication-thumbnail {
     width: min(100%, 240px);
+    justify-self: center;
   }
 
   .project-media {
     width: min(100%, 280px);
+    justify-self: center;
+  }
+
+  .section-intro {
+    white-space: normal;
   }
 
   .experience-entry {
