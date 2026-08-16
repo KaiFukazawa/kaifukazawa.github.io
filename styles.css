@@ -193,6 +193,19 @@ h3 {
   font-weight: 650;
 }
 
+.news-icon {
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  margin-left: 0.18em;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  vertical-align: -0.34em;
+}
+
 .publication-list {
   display: grid;
   gap: 16px;
