@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="DIM-IL studies how expert-state density can help behavior cloning stay near demonstrated behavior without online expert corrections.">
+    <title>DIM-IL | Density-Informed Margin Imitation Learning</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-owner" href="https://kaifukazawa.github.io/">Kai Fukazawa</a>
+        <nav aria-label="Page sections">
+          <a href="#problem">Problem</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="intro" aria-labelledby="page-title">
+        <div class="content-width">
+          <p class="eyebrow">Ongoing research / imitation learning</p>
+          <h1 id="page-title">Density-Informed Margin<br>Imitation Learning <span>(DIM-IL)</span></h1>
+          <p class="intro-lead">Can a policy learn to stay near expert behavior using demonstrations alone?</p>
+          <p class="intro-summary">DIM-IL augments behavior cloning with a support-aware training signal. It estimates where expert states lie, then discourages actions predicted to move the policy into low-support regions, without requiring online expert corrections.</p>
+          <p class="byline"><a href="https://kaifukazawa.github.io/">Kai Fukazawa</a> <span>University of California, Davis</span></p>
+        </div>
+      </section>
+
+      <figure class="support-figure">
+        <div class="figure-inner">
+          <img src="assets/support-margin.png" alt="Green expert-state samples tracing a curved path, with a blue outline marking the estimated support boundary." width="1402" height="1122">
+          <figcaption>Expert demonstrations define a region of supported states. DIM-IL uses estimated density to identify when a candidate action may move outside that region. Conceptual figure from the research slides.</figcaption>
+        </div>
+      </figure>
+
+      <section class="section" id="problem" aria-labelledby="problem-title">
+        <div class="content-width two-column">
+          <div>
+            <p class="section-label">01 / The problem</p>
+            <h2 id="problem-title">Small errors can take a policy somewhere its data cannot guide it.</h2>
+          </div>
+          <div class="section-copy">
+            <p>Behavior cloning learns directly from fixed expert demonstrations. That simplicity makes it scalable, but an imperfect action can shift the next state away from the training distribution. Errors can compound as the policy continues from states it has rarely seen.</p>
+            <p>Interactive imitation learning can collect corrections on those states. For physical robots, however, additional rollouts and expert intervention can be expensive or risky. DIM-IL asks whether offline demonstrations already contain enough information to shape safer behavior.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section method-section" id="method" aria-labelledby="method-title">
+        <div class="content-width">
+          <p class="section-label">02 / The method</p>
+          <h2 id="method-title">From imitation to support-aware imitation.</h2>
+          <p class="section-intro">The training objective keeps behavior cloning as its foundation and adds a soft penalty for predicted support-margin violations.</p>
+          <div class="method-steps">
+            <div class="method-step">
+              <span class="step-number">01</span>
+              <h3>Estimate expert-state support</h3>
+              <p>Fit a normalizing flow to the states in expert demonstrations. Its log density provides a signal for whether a state resembles those the expert visited.</p>
+            </div>
+            <div class="method-step">
+              <span class="step-number">02</span>
+              <h3>Predict support drift</h3>
+              <p>Learn a one-step model that estimates how a candidate action changes the support score. This converts state density into an action-level signal.</p>
+            </div>
+            <div class="method-step">
+              <span class="step-number">03</span>
+              <h3>Shape the policy</h3>
+              <p>Train the policy with behavior cloning plus a soft margin penalty. Actions predicted to leave expert-supported states receive a larger penalty.</p>
+            </div>
+          </div>
+          <p class="method-note">The margin is soft: the goal is to prefer support-preserving actions, not to impose a hard constraint that every predicted step must satisfy.</p>
+        </div>
+      </section>
+
+      <section class="section" id="results" aria-labelledby="results-title">
+        <div class="content-width">
+          <p class="section-label">03 / Preliminary evaluation</p>
+          <h2 id="results-title">An early comparison on RoboMimic Square.</h2>
+          <p class="section-intro">The research slides compare diffusion-policy behavior cloning with DIM-IL on the Square manipulation task. Values are averages over three seeds; they are preliminary and should not be read as a broad benchmark result.</p>
+          <div class="table-scroll" role="region" aria-label="Preliminary RoboMimic Square results" tabindex="0">
+            <table>
+              <thead>
+                <tr><th scope="col">Metric</th><th scope="col">BC (Diffusion Policy)</th><th scope="col">DIM-IL</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Success rate <span class="metric-direction">higher is better</span></th><td>0.800</td><td class="dimil-value">0.840</td></tr>
+                <tr><th scope="row">Rollout horizon <span class="metric-direction">lower is better</span></th><td>197.72</td><td class="dimil-value">186.20</td></tr>
+                <tr><th scope="row">Low-density rate <span class="metric-direction">lower is better</span></th><td>0.2802</td><td class="dimil-value">0.2429</td></tr>
+                <tr><th scope="row">Low-density dwell <span class="metric-direction">lower is better</span></th><td>83.69</td><td class="dimil-value">68.50</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="results-note">These numbers come from the supplied qualifying-examination slides. The project is ongoing; additional tasks and real-robot validation are future work.</p>
+        </div>
+      </section>
+
+      <section class="section next-section" aria-labelledby="next-title">
+        <div class="content-width two-column">
+          <div>
+            <p class="section-label">04 / Next steps</p>
+            <h2 id="next-title">Beyond a single manipulation task.</h2>
+          </div>
+          <div class="section-copy">
+            <p>The planned evaluation extends to harder, longer-horizon manipulation, including ALOHA simulation and hardware tasks with image observations and bimanual control.</p>
+            <p>Current results are a starting point for testing whether the same support-aware signal remains useful as observations and actions become more complex.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="content-width footer-inner">
+        <span>DIM-IL / Density-Informed Margin Imitation Learning</span>
+        <a href="https://kaifukazawa.github.io/">Kai Fukazawa</a>
+      </div>
+    </footer>
+  </body>
+</html>
