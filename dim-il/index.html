@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="DIM-IL studies how expert-state density can help behavior cloning stay near demonstrated behavior without online expert corrections.">
+    <meta name="description" content="DIM-IL uses expert-state density and a one-step support margin to make offline behavior cloning more aware of distribution drift.">
     <title>DIM-IL | Density-Informed Margin Imitation Learning</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -14,8 +15,11 @@
         <a class="site-owner" href="https://kaifukazawa.github.io/">Kai Fukazawa</a>
         <nav aria-label="Page sections">
           <a href="#problem">Problem</a>
+          <a href="#margin">Margin</a>
           <a href="#method">Method</a>
           <a href="#results">Results</a>
+          <a href="#monitor">Monitor</a>
+          <a href="#ablation">Ablation</a>
         </nav>
       </div>
     </header>
@@ -23,65 +27,127 @@
     <main id="main">
       <section class="intro" aria-labelledby="page-title">
         <div class="content-width">
-          <p class="eyebrow">Ongoing research / imitation learning</p>
+          <p class="eyebrow">Focus 2 / offline imitation learning</p>
           <h1 id="page-title">Density-Informed Margin<br>Imitation Learning <span>(DIM-IL)</span></h1>
-          <p class="intro-lead">Can a policy learn to stay near expert behavior using demonstrations alone?</p>
-          <p class="intro-summary">DIM-IL augments behavior cloning with a support-aware training signal. It estimates where expert states lie, then discourages actions predicted to move the policy into low-support regions, without requiring online expert corrections.</p>
+          <p class="intro-lead">Can we mitigate compounding error while preserving the simplicity of behavior cloning?</p>
+          <p class="intro-summary">DIM-IL learns a support margin from fixed expert demonstrations. A one-step signal then helps the policy avoid actions predicted to drift away from those demonstrated states, while the same signal remains available as a runtime monitor.</p>
           <p class="byline"><a href="https://kaifukazawa.github.io/">Kai Fukazawa</a> <span>University of California, Davis</span></p>
         </div>
       </section>
 
-      <figure class="support-figure">
-        <div class="figure-inner">
-          <img src="assets/support-margin.png" alt="Green expert-state samples tracing a curved path, with a blue outline marking the estimated support boundary." width="1402" height="1122">
-          <figcaption>Expert demonstrations define a region of supported states. DIM-IL uses estimated density to identify when a candidate action may move outside that region. Conceptual figure from the research slides.</figcaption>
-        </div>
-      </figure>
-
       <section class="section" id="problem" aria-labelledby="problem-title">
-        <div class="content-width two-column">
-          <div>
-            <p class="section-label">01 / The problem</p>
-            <h2 id="problem-title">Small errors can take a policy somewhere its data cannot guide it.</h2>
+        <div class="content-width">
+          <p class="section-label">01 / Behavior cloning and compounding error</p>
+          <h2 id="problem-title">A small mistake changes the states a policy sees next.</h2>
+          <p class="section-intro">Behavior cloning (BC) is supervised learning on a fixed demonstration dataset. The mismatch appears during execution: the policy acts on states produced by its own earlier actions, so one error can carry it into regions where the expert data offers little guidance.</p>
+          <figure class="wide-figure">
+            <img src="assets/compounding-error.png" alt="Three-step illustration: training follows expert states, a small deployment mistake changes the next state, then the learner drifts into poorly covered states." loading="lazy" width="2140" height="735">
+            <figcaption>Training on demonstrations, a small deployment error, and subsequent drift. Figure from the Focus 2 slides.</figcaption>
+          </figure>
+          <div class="context-grid">
+            <div>
+              <h3>Interactive correction</h3>
+              <p>Methods such as DAgger collect expert corrections on states visited by the learner. That direct feedback is useful, but online rollouts and human intervention can be expensive or risky on physical robots.</p>
+            </div>
+            <div>
+              <h3>Purely offline alternatives</h3>
+              <p>Model rollouts and distribution-matching methods address the same shift using fixed data, often with additional models or estimation objectives. DIM-IL looks for a smaller change to the BC training interface.</p>
+            </div>
           </div>
-          <div class="section-copy">
-            <p>Behavior cloning learns directly from fixed expert demonstrations. That simplicity makes it scalable, but an imperfect action can shift the next state away from the training distribution. Errors can compound as the policy continues from states it has rarely seen.</p>
-            <p>Interactive imitation learning can collect corrections on those states. For physical robots, however, additional rollouts and expert intervention can be expensive or risky. DIM-IL asks whether offline demonstrations already contain enough information to shape safer behavior.</p>
+          <p class="research-question">What if demonstrations supplied both actions to imitate and a margin against leaving their support?</p>
+        </div>
+      </section>
+
+      <section class="section margin-section" id="margin" aria-labelledby="margin-title">
+        <div class="content-width">
+          <p class="section-label">02 / From matching to margins</p>
+          <h2 id="margin-title">Pointwise imitation becomes support-aware learning.</h2>
+          <p class="section-intro">The analogy begins in supervised classification: a classifier can fit labeled examples while leaving little room at the boundary. A margin changes the objective. In imitation learning there is no class boundary, so DIM-IL treats expert-state support as the boundary to watch.</p>
+          <div class="sequence" data-sequence aria-label="Matching to margin conceptual sequence">
+            <div class="sequence-toolbar">
+              <div class="sequence-tabs" role="group" aria-label="Conceptual steps">
+                <button type="button" class="is-active" data-sequence-step="0" aria-pressed="true">1. Pointwise fit</button>
+                <button type="button" data-sequence-step="1" aria-pressed="false">2. Classification margin</button>
+                <button type="button" data-sequence-step="2" aria-pressed="false">3. Expert support</button>
+                <button type="button" data-sequence-step="3" aria-pressed="false">4. Density margin</button>
+              </div>
+              <button class="sequence-toggle" type="button" data-sequence-toggle aria-label="Pause sequence">Pause</button>
+            </div>
+            <div class="sequence-display">
+              <figure class="sequence-panel is-active" data-sequence-panel="0" aria-hidden="false">
+                <img src="assets/pointwise-fit.png" alt="A pointwise classifier fits an outlier and leaves a narrow margin." width="920" height="614">
+                <figcaption><strong>Matching examples</strong><span>A direct fit can leave little margin around the data.</span></figcaption>
+              </figure>
+              <figure class="sequence-panel" data-sequence-panel="1" aria-hidden="true">
+                <img src="assets/classification-margin.png" alt="An SVM decision boundary with a larger margin between two classes." loading="lazy" width="791" height="572">
+                <figcaption><strong>Adding a margin</strong><span>The SVM analogy makes distance from a boundary part of learning.</span></figcaption>
+              </figure>
+              <figure class="sequence-panel" data-sequence-panel="2" aria-hidden="true">
+                <img src="assets/expert-demonstrations.png" alt="Expert-state samples form a curved region in state space." loading="lazy" width="1122" height="1402">
+                <figcaption><strong>Finding the IL boundary</strong><span>Expert demonstrations reveal the states the task has actually covered.</span></figcaption>
+              </figure>
+              <figure class="sequence-panel" data-sequence-panel="3" aria-hidden="true">
+                <img src="assets/support-margin.png" alt="A blue boundary surrounds the curved expert-state density." loading="lazy" width="1402" height="1122">
+                <figcaption><strong>Using expert support as a margin</strong><span>A density estimate turns that region into a support score and boundary.</span></figcaption>
+              </figure>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="section method-section" id="method" aria-labelledby="method-title">
         <div class="content-width">
-          <p class="section-label">02 / The method</p>
-          <h2 id="method-title">From imitation to support-aware imitation.</h2>
-          <p class="section-intro">The training objective keeps behavior cloning as its foundation and adds a soft penalty for predicted support-margin violations.</p>
-          <div class="method-steps">
-            <div class="method-step">
-              <span class="step-number">01</span>
-              <h3>Estimate expert-state support</h3>
-              <p>Fit a normalizing flow to the states in expert demonstrations. Its log density provides a signal for whether a state resembles those the expert visited.</p>
+          <p class="section-label">03 / DIM-IL in two stages</p>
+          <h2 id="method-title">Estimate support, then shape behavior cloning.</h2>
+          <figure class="method-map" aria-label="DIM-IL method overview">
+            <div class="method-map-step">
+              <img src="assets/expert-demonstrations.png" alt="Curved region of expert demonstration states." loading="lazy" width="1122" height="1402">
+              <span>Expert demonstrations</span>
             </div>
-            <div class="method-step">
-              <span class="step-number">02</span>
-              <h3>Predict support drift</h3>
-              <p>Learn a one-step model that estimates how a candidate action changes the support score. This converts state density into an action-level signal.</p>
+            <div class="method-map-step">
+              <img src="assets/support-density.png" alt="Expert-state density estimated by a normalizing flow." loading="lazy" width="1402" height="1122">
+              <span>Normalizing flow</span>
             </div>
-            <div class="method-step">
-              <span class="step-number">03</span>
-              <h3>Shape the policy</h3>
-              <p>Train the policy with behavior cloning plus a soft margin penalty. Actions predicted to leave expert-supported states receive a larger penalty.</p>
+            <div class="method-map-step">
+              <img src="assets/support-margin.png" alt="Estimated support boundary around expert-state samples." loading="lazy" width="1402" height="1122">
+              <span>One-step support margin</span>
+            </div>
+            <div class="method-map-step method-map-step--objective">
+              <strong>BC + &lambda; penalty</strong>
+              <span>Support-aware policy</span>
+            </div>
+            <figcaption>DIM-IL turns the geometry of expert demonstrations into a soft training signal. Figures from the Focus 2 slides.</figcaption>
+          </figure>
+          <div class="stage-block">
+            <div class="stage-heading"><span class="step-number">Stage 1</span><h3>Learn a support score from demonstrations</h3></div>
+            <p>Fit a normalizing flow to expert states, convert its estimated log density into a low-support potential, and train a one-step predictor on logged transitions. The predictor estimates whether a candidate action moves toward lower support. These components are fixed for policy training.</p>
+            <div class="density-visual">
+              <figure>
+                <img src="assets/support-density.png" alt="Estimated density over expert-state samples, shown as a green curved region." loading="lazy" width="1402" height="1122">
+                <figcaption>Normalizing flow estimates expert-state density.</figcaption>
+              </figure>
+              <div class="formula-block" aria-label="Support score and one-step violation">
+                <p><span class="formula-label">Low-support score</span><span class="formula">V(s) = -&beta; log d<sub>E</sub>(s) + c</span></p>
+                <p><span class="formula-label">One-step violation</span><span class="formula">&xi;(s,a) = [f(s,a) - V(s) + &kappa;]<sub>+</sub></span></p>
+                <p class="formula-help">Higher V means lower estimated expert support. The violation grows when an action is predicted to increase that score beyond the margin.</p>
+              </div>
             </div>
           </div>
-          <p class="method-note">The margin is soft: the goal is to prefer support-preserving actions, not to impose a hard constraint that every predicted step must satisfy.</p>
+          <div class="stage-block stage-block--second">
+            <div class="stage-heading"><span class="step-number">Stage 2</span><h3>Prefer actions that preserve support</h3></div>
+            <p>The policy remains a supervised imitation model. Its BC loss is augmented with a soft penalty derived from the frozen one-step signal, so candidate actions predicted to drift farther from expert support receive less preference.</p>
+            <div class="objective-band"><span>Training objective</span><strong>L = L<sub>BC</sub> + &lambda; E[ support-margin penalty ]</strong></div>
+            <p class="method-note">This is a local, learned signal rather than a guarantee that every long rollout stays in distribution. The penalty strength must balance support preservation against completing the task.</p>
+          </div>
         </div>
       </section>
 
       <section class="section" id="results" aria-labelledby="results-title">
         <div class="content-width">
-          <p class="section-label">03 / Preliminary evaluation</p>
+          <p class="section-label">04 / Experimental setup and preliminary results</p>
           <h2 id="results-title">An early comparison on RoboMimic Square.</h2>
-          <p class="section-intro">The research slides compare diffusion-policy behavior cloning with DIM-IL on the Square manipulation task. Values are averages over three seeds; they are preliminary and should not be read as a broad benchmark result.</p>
+          <p class="section-intro">The initial test uses low-dimensional RoboMimic Square observations and a Diffusion Policy backbone. The table compares BC with DIM-IL across three matched seeds. It reports task performance alongside how often and how long rollouts occupy low-density states.</p>
+          <p class="results-context">The values below are preliminary three-seed means from the supplied slides.</p>
           <div class="table-scroll" role="region" aria-label="Preliminary RoboMimic Square results" tabindex="0">
             <table>
               <thead>
@@ -95,19 +161,58 @@
               </tbody>
             </table>
           </div>
-          <p class="results-note">These numbers come from the supplied qualifying-examination slides. The project is ongoing; additional tasks and real-robot validation are future work.</p>
+          <p class="results-note">Success and support-drift metrics move in a favorable direction on this task. This is an initial result, not evidence of a general long-horizon guarantee.</p>
+        </div>
+      </section>
+
+      <section class="section monitor-section" id="monitor" aria-labelledby="monitor-title">
+        <div class="content-width">
+          <p class="section-label">05 / Analytics as a runtime monitor</p>
+          <h2 id="monitor-title">The same support signal can be watched during execution.</h2>
+          <p class="section-intro">The slides pair two rollouts from the same initial state with the evolving one-step violation and expert-state log-density. The traces help distinguish momentary threshold crossings from prolonged drift; neither signal alone is a complete measure of task success.</p>
+          <div class="monitor-grid">
+            <figure>
+              <img src="assets/runtime-rollout.gif" alt="Animated paired RoboMimic Square rollouts from the same initial state, with failure and success branches side by side." loading="lazy" width="1024" height="512">
+              <figcaption>Paired failure and success branches from the same initial state.</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/runtime-signals.gif" alt="Animated chart of one-step violation and expert-state log-density over the paired rollout." loading="lazy" width="1032" height="600">
+              <figcaption>One-step violation above; expert-state log-density below. Original GIFs from the runtime-monitor slide.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="ablation" aria-labelledby="ablation-title">
+        <div class="content-width">
+          <p class="section-label">06 / Normalizing flow ablation</p>
+          <h2 id="ablation-title">Which density model should define the margin?</h2>
+          <p class="section-intro">The appendix compares RealNVP and MAF as Stage 1 density estimators. The validation-loss curves and PCA projections below are the original figures from those slides. They illustrate model and seed sensitivity in this setting, rather than a universal ranking of flow families.</p>
+          <div class="ablation-grid">
+            <div class="ablation-model">
+              <h3>RealNVP</h3>
+              <figure><img src="assets/realnvp-nll.png" alt="RealNVP validation negative log-likelihood decreases and stabilizes over training epochs." loading="lazy" width="640" height="480"><figcaption>Validation negative log-likelihood</figcaption></figure>
+              <figure><img src="assets/realnvp-pca.png" alt="Three-dimensional PCA projection of validation states colored by RealNVP log density." loading="lazy" width="640" height="480"><figcaption>Validation-state PCA colored by log density</figcaption></figure>
+            </div>
+            <div class="ablation-model">
+              <h3>MAF</h3>
+              <figure><img src="assets/maf-nll.png" alt="MAF validation negative log-likelihood has a very large spike in the shown run." loading="lazy" width="640" height="480"><figcaption>Validation negative log-likelihood</figcaption></figure>
+              <figure><img src="assets/maf-pca.png" alt="Three-dimensional PCA projection of validation states colored by MAF log density." loading="lazy" width="640" height="480"><figcaption>Validation-state PCA colored by log density</figcaption></figure>
+            </div>
+          </div>
+          <p class="results-note">In the current aligned three-seed pipeline, the longer draft uses RealNVP for the main certifier because it produced stable complete artifacts across seeds. The slide figures show representative training behavior, not an exhaustive ablation.</p>
         </div>
       </section>
 
       <section class="section next-section" aria-labelledby="next-title">
         <div class="content-width two-column">
           <div>
-            <p class="section-label">04 / Next steps</p>
+            <p class="section-label">07 / Next steps</p>
             <h2 id="next-title">Beyond a single manipulation task.</h2>
           </div>
           <div class="section-copy">
-            <p>The planned evaluation extends to harder, longer-horizon manipulation, including ALOHA simulation and hardware tasks with image observations and bimanual control.</p>
-            <p>Current results are a starting point for testing whether the same support-aware signal remains useful as observations and actions become more complex.</p>
+            <p>The next validation target is harder, longer-horizon manipulation. The slides propose ALOHA simulation and hardware tasks with image observations and bimanual control, using ACT as the policy backbone.</p>
+            <p>This will test whether the support-aware signal still helps when observations, actions, and task phases become more complex.</p>
           </div>
         </div>
       </section>
